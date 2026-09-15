@@ -6,6 +6,6 @@ The prototype hardware more or less replicates the app's on screen key layout so
 
 I may do a PCB for this project - not sure if it will use the prototype layout or the actual M8 key layout.
 
-No schematic yet but you can figure it out easily from the code. The hardware is pretty simple.
+No schematic yet but you can figure it out easily from the code. The basic hardware is pretty simple - some keyswitches connected to a Raspberry Pi Pico 2 W. The proto has a LiPO battery, charger, battery voltage monitoring and a tricolor LED to indicate battery status
 
 Sept 15/2026 - initial version of the code
