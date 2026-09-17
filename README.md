@@ -2,10 +2,14 @@ BLE Wireless Keyboard for the M8 iOS App
 
 When I saw that Dirtywave had released an M8 app on iOS one my first thoughts was to make an M8 like keyboard for it. I have an M8 headless that is almost identical to the real M8 and I wanted to leverage the muscle memory I had developed for that.
 
-The prototype hardware more or less replicates the app's on screen key layout so will be useful to users that have never used a real M8 and want something better than the touch controls.
+The prototype worked very well so I have designed a PCB and enclosure which more or less duplicates the M8 V1 design - Kailh switches, appxo 96mm x 84mm x18mm, white silkscreen. It has a small RGB led for indicating battery status and pads for a switch. I couldn't find a suitable PCB mounted R/A slide switch so I went with PCB pads so you can put in whatever you have. There are pads for a lipo charger module as well.
 
-I may do a PCB for this project - not sure if it will use the prototype layout or the actual M8 key layout.
-
-No schematic yet but you can figure it out easily from the code. The basic hardware is pretty simple - some keyswitches connected to a Raspberry Pi Pico 2 W. The proto has a LiPO battery, charger, battery voltage monitoring and a tricolor LED to indicate battery status.
+ ![Alt text](https://github.com/rheslip/Pico-2-Groovebox/blob/main/images/M8 V1 and V2.jpg "M8 Version 2 and 1")
+ ![Alt text](https://github.com/rheslip/Pico-2-Groovebox/blob/main/images/PCBfront.jpg "M8KB PCB front side")
+ ![Alt text](https://github.com/rheslip/Pico-2-Groovebox/blob/main/images/PCBback.jpg "M8KB PCB back side") 
+ 
+**CAUTION** the LiPo charger modules sold on Aliexpress that I designed it for are set up for 1A charge rate which is too high for most small LiPo's. To be safe you will want to change the current setting resistor to something like 1/3 of the battery capacity. Or just use 3 AAA batteries which is much safer.
 
 Sept 15/2026 - initial version of the code
+
+Sept 17/2026 - added hardware design files for PCB **NOT TESTED YET**
