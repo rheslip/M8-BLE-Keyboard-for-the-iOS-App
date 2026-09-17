@@ -4,7 +4,7 @@ When I saw that Dirtywave had released an M8 app on iOS one my first thoughts wa
 
 The prototype worked very well so I have designed a PCB and enclosure which more or less duplicates the M8 V1 design - Kailh switches, appxo 96mm x 84mm x18mm, white silkscreen. It has a small RGB led for indicating battery status and pads for a switch. I couldn't find a suitable PCB mounted R/A slide switch so I went with PCB pads so you can put in whatever you have. There are pads for a lipo charger module as well.
 
- ![Alt text](Images/M8_V1 and V2.jpg "M8 Version 2 and 1")
+ ![Alt text](Images/M8_V1_V2.jpg "M8 Version 2 and 1")
  ![Alt text](Images/PCBtop.jpg "M8KB PCB front side")
  ![Alt text](Images/PCBbot.jpg "M8KB PCB back side") 
  
