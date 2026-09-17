@@ -8,7 +8,7 @@ The prototype worked very well so I have designed a PCB and enclosure which more
  ![Alt text](Images/PCBtop.jpg "M8KB PCB front side")
  ![Alt text](Images/PCBbot.jpg "M8KB PCB back side") 
  
- 3D Renders of the enclosure. Note the cutouts for USB-C charging jack and switch. I use small slide switches about 5mm thick by 13mm wide. Glue it to the PCB and wire the switch leads to the provided pads.
+ 3D Renders of the enclosure. Note the cutouts for USB-C charging jack and switch. 
 
 
  ![Alt text](Images/enclosure1.jpg "Front view") 
@@ -18,11 +18,17 @@ The prototype worked very well so I have designed a PCB and enclosure which more
   
 Batteries
 
-I usually use LiPo batteries and small charger modules from AliExpress. The PCB footprint is for this one which has a LiPo protection circuit as well but you can barnacle almost any of these on and make it work.
- 
-**CAUTION this TP4056 charger module is set up for 1A charge rate which is too high for most small LiPo's** To be safe you will want to change the current setting resistor to something like 1/3 of the battery capacity. 
+I use LiPo batteries and small charger modules from AliExpress. The PCB footprint is for this one which has a LiPo protection circuit as well but you can barnacle almost any of these on and make it work.
 
 ![Alt text](Images/PCBbot.jpg "charger") 
+
+ 
+**CAUTION this TP4056 charger module is set up for 1A charge rate which is too high for most small LiPo's ** 
+To be safe you will want to change the current setting resistor to something like 1/3 of the battery capacity.
+
+** LiPo batteries are a fire hazard!!! Do not use a LiPo unless you are comfortable modifying the module appropriately, testing it, and are willing to take the risk **
+
+
 
 Alternatively use 3 AAA batteries which is much safer. You can use 2x AAA as well but the battery life will be reduced by 1/3.
 The battery indicator is set up for the range of a LiPo 4.2V full, 3V cutoff which is about the same voltage range as three AAA. If you use something else you will need to modify the sketch.
@@ -31,16 +37,19 @@ Power consumption of the Pico 2 W running this sketch is around 40ma at 5V (0.2 
 
 Assembly
 
-Solder the three 0603 resistors, the .1u cap and the schottky diode. Solder in the RGB LED making sure that the orientation matches the silkscreen and make sure the lens is facing the FRONT of the PCB. Solder the Pico 2W to the pads. 
+Solder the three 0603 resistors, the .1u cap and the schottky diode. Solder in the RGB LED making sure that the orientation matches the silkscreen and make sure the lens is facing the FRONT of the PCB. If you don't want to source this LED, you can barnacle an SMT LED or even a 3mm LED to the pads but you will have to modify the sketch to make in blink or something when the battery is low.
+
+Solder the Pico 2W to the pads. 
 If you think you may want to remove it at some point best to use small wires or perhaps put some kapton tape on the bottom of the Pico - if the pads have been soldered directly to the PCB pads its very hard to desolder.
 
 Solder in the Kailh 1350 switches so the plungers are on the front side of the PCB (obviously). These switches are the same ones used on the M8 and they are available with different actuation forces and "clickiness". The M8 has removable switches - I had the sockets in the design and then took it out. M8 users probably already know which switches they like.
 
 If you are using a LiPo, solder the charger module to the four pads so the USB jack faces to the left with the board switch side up. If you are using a AAA holder, solder the +ve lead to the OUT+ pad and the -ve lead to OUT- pad. A 3x AAA battery holder should just fit between the Pico and the charger pads and can be stuck to the PCB with double sided foam tape. 
 
-I couldn't find a suitable PCB mounted R/A slide switch so I went with PCB pads so you can solder in whatever you have. Glue the switch to the board so it is flush with the edge of the PCB and aligned with the switch cutout in the enclosure.
+I couldn't find a suitable PCB mounted R/A slide switch so I went with PCB pads so you can solder in whatever you have. I use small slide switches about 5mm thick by 13mm wide. Glue it to the PCB and wire the switch leads to the provided pads.Glue the switch to the board so it is flush with the edge of the PCB and aligned with the switch cutout in the enclosure.
 
+The mounting holes in the enclosure are sized for 4-40 or 3mm screws - tap the holes. You could also use small wood or plastic cutting screws.
 
-Sept 15/2026 - initial version of the code
+Sept 15/2026 - initial version of the code - ** still needs to be modified for the PCB version of M8KB **
 
 Sept 17/2026 - added hardware design files for PCB and enclosure **NOT TESTED YET - still awaiting PCBs from JLCPCB**
