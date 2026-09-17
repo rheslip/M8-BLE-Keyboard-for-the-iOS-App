@@ -8,6 +8,8 @@ The prototype worked very well so I have designed a PCB and enclosure which more
  ![Alt text](Images/PCBtop.jpg "M8KB PCB front side")
  ![Alt text](Images/PCBbot.jpg "M8KB PCB back side") 
  
+ You may notice there is no ground fill on the board. This is intentional - a large GND plane near the antenna will mess with the BLE signal. I also wanted a clean front panel with no visible planes/traces/vias.
+ 
  3D Renders of the enclosure. Note the cutouts for USB-C charging jack and switch. 
 
 
@@ -33,21 +35,23 @@ To be safe you will want to change the current setting resistor to something lik
 Alternatively use 3 AAA batteries which is much safer. You can use 2x AAA as well but the battery life will be reduced by 1/3.
 The battery indicator is set up for the range of a LiPo 4.2V full, 3V cutoff which is about the same voltage range as three AAA. If you use something else you will need to modify the sketch.
 
-Power consumption of the Pico 2 W running this sketch is around 40ma at 5V (0.2 watts). If you use three AAA alkalines (around 3WH) the batteries should last around 15 hours. An 800 Mah LiPo should have about the save battery life.
+Power consumption of the Pico 2 W running this sketch is around 40ma at 5V (0.2 watts). If you use three AAA alkalines (around 3WH) the batteries should last around 15 hours. An 800 Mah LiPo should have about the same battery life.
 Unfortunately the Pico 2 BLE stack does not support power management or underclocking which would have been nice to extend the battery life.
 
 Assembly
 
-Solder the three 0603 resistors, the .1u cap and the schottky diode. Solder in the RGB LED making sure that the orientation matches the silkscreen and make sure the lens is facing the FRONT of the PCB. If you don't want to source this LED, you can barnacle an SMT LED or even a 3mm LED to the pads but you will have to modify the sketch to make in blink or something when the battery is low.
+Solder the three 0603 resistors, the .1u cap and the schottky diode. Solder in the RGB LED making sure that the orientation matches the silkscreen and make sure the lens is facing the FRONT of the PCB. If you don't want to source this LED, you can barnacle an SMT LED or even a 3mm LED to the pads but you will have to modify the sketch to make it blink or something when the battery is low.
 
 Solder the Pico 2W to the pads. 
 If you think you may want to remove it at some point best to use small wires or perhaps put some kapton tape on the bottom of the Pico - if the pads have been soldered directly to the PCB pads its very hard to desolder. Also make sure the USB connector edge is flush with the PCB edge - you don't want it to stick out because there is no provision for it in the enclosure. ie load the firmware with the board out of the enclosure.
 
 Solder in the Kailh 1350 switches so the plungers are on the front side of the PCB (obviously). These switches are the same ones used on the M8 and they are available with different actuation forces and "clickiness". The M8 has removable switches - I had the sockets in the design and then took them out. M8 users probably already know which switches they like.
 
-If you are using a LiPo, solder the charger module to the four pads so the USB jack faces to the left with the board switch side up. If you are using a AAA holder, solder the +ve lead to the OUT+ pad and the -ve lead to OUT- pad. A 3x AAA battery holder should just fit between the Pico and the charger pads and can be stuck to the PCB with double sided foam tape. 
+If you are using a LiPo, solder the charger module to the four pads so the USB jack faces to the left with the board switch side up. 
 
-If you are using a LiPo, solder the negative battery lead to the B- pad on the charger module. At this point its a very good idea to put a current meter between the B+ pad and the battery + lead and make sure the power switch is off. If everything is OK there should be just a very tiny leakage current. If not, you probably have a bad module. I always check the charging current at this stage as well.
+Solder the negative battery lead to the B- pad on the charger module. At this point its a very good idea to put a current meter between the B+ pad and the battery + lead - make sure the power switch is off. If everything is OK there should be just a very tiny leakage current. If not, you probably have a bad module. I always check the charging current at this stage as well.
+
+If you are using a AAA holder, solder the +ve lead to the OUT+ pad and the -ve lead to OUT- pad. A 3x AAA battery holder should just fit between the Pico and the charger pads and can be stuck to the PCB with double sided foam tape. 
 
 I couldn't find a suitable PCB mounted R/A slide switch so I went with PCB pads so you can solder in whatever you have. I use small slide switches about 5mm thick by 13mm wide. Glue it to the PCB and wire the switch leads to the provided pads. Make sure the switch is flush with the edge of the PCB and aligned with the switch cutout in the enclosure.
 
