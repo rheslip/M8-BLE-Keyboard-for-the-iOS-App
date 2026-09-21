@@ -8,7 +8,7 @@ The prototype worked very well so I have designed a PCB and enclosure which more
 
 M8 V1 and V2 images for reference
 
- ![Alt text](Images/M8_V1_V2.jpg  "M8 Version 2 and 1")
+ ![Alt text](Images/M8_V1V2.jpg  "M8 Version 2 and 1")
  
 Second prototype using Cherry MX switches and 3D printed keycaps. First prototype was closer to the key layout in the M8 app.
  
