@@ -2,9 +2,14 @@
 
 When I saw that Dirtywave had released an M8 app on iOS one my first thoughts was to make an M8 like keyboard for it. I have an M8 headless that is almost identical to the real M8 and I wanted to leverage the muscle memory I had developed for that.
 
+Altho it was created for use with the iOS app, with some software modifications it would work on a PC with the M8 Headless as well.
+
 The prototype worked very well so I have designed a PCB and enclosure which more or less duplicates the M8 V1 design - eight Kailh switches, approx 97mm x 84mm x18mm, white silkscreen. It has a small RGB led for indicating battery status, pads for a switch and pads for a lipo charger module as well.
 
  ![Alt text](Images/M8_V1_V2.jpg "M8 Version 2 and 1")
+ ![Alt text](Images/proto2.jpg "Prototype") 
+ 
+ 
  ![Alt text](Images/PCBtop.jpg "M8KB PCB front side")
  ![Alt text](Images/PCBbot.jpg "M8KB PCB back side") 
  
@@ -38,6 +43,18 @@ The battery indicator is set up for the range of a LiPo 4.2V full, 3V cutoff whi
 Power consumption of the Pico 2 W running this sketch is around 40ma at 5V (0.2 watts). If you use three AAA alkalines (around 3WH) the batteries should last around 15 hours. An 800 Mah LiPo should have about the same battery life.
 Unfortunately the Pico 2 BLE stack does not support power management or underclocking which would have been nice to extend the battery life.
 
+Usage
+
+I have not had much luck getting the iOS bluetooth settings to see the M8KB device directly. Adafruit's Bluefruit Connect app sees it and pairs with it no problem. After pairing with Bluefruit Connect, iOS will automatically connect to it every time. This is not the first time I've have trouble with bluetooth devices on iOS. There seem to be some subtle incompatibilies between the Pico's implementation of BLE and what Apple wants to see.
+
+If you recompile and reinstall the firmware you have to forget the device and pair it again on your iPad/iPhone. 
+
+The default key bindings are set up to work with the M8 app default keyboard assignment but you may have to re-bind the key assignments in the M8 app to get everything working correctly. In particular the M8 app sees the SHIFT and EDIT keys as the same key until you re-bind them. I think this is because the Arduino keyboard library treats the shift key as a modifier and not as a separate key. You will only have to do this once - the M8 app remembers the key bindings.
+
+Another oddity is that if you are using the M8 app in AUM when you switch to another AUV3 plugin and come back to M8 it loses the connection to M8KB. You can restore it by double tapping the screen to hide/show the on screen controls. M8KB does not show up in the device list in AUM either but it works OK other than the aforementioned disconnect. More weirdness with Pico + iOS BLE or perhaps a bug in the M8 app. 
+
+It connects to a PC but doesn't work with M8 web display. It would probably work by changing the Pico library from keyboardBLE to gamepadBLE. More testing is needed.
+
 Assembly
 
 Solder the three 0603 resistors, the .1u cap and the schottky diode. Solder in the RGB LED making sure that the orientation matches the silkscreen and make sure the lens is facing the FRONT of the PCB. If you don't want to source this LED, you can barnacle an SMT LED or even a 3mm LED to the pads but you will have to modify the sketch to make it blink or something when the battery is low.
@@ -47,9 +64,7 @@ If you think you may want to remove it at some point best to use small wires or 
 
 Solder in the Kailh 1350 switches so the plungers are on the front side of the PCB (obviously). These switches are the same ones used on the M8 and they are available with different actuation forces and "clickiness". The M8 has removable switches - I had the sockets in the design and then took them out. M8 users probably already know which switches they like.
 
-If you are using a LiPo, solder the charger module to the four pads so the USB jack faces to the left with the board switch side up. 
-
-Solder the negative battery lead to the B- pad on the charger module. At this point its a very good idea to put a current meter between the B+ pad and the battery + lead - make sure the power switch is off. If everything is OK there should be just a very tiny leakage current. If not, you probably have a bad module. I always check the charging current at this stage as well.
+If you are using a LiPo, solder the charger module to the four pads so the USB jack faces to the left with the board switch side up. Solder the negative battery lead to the B- pad on the charger module. At this point its a very good idea to put a current meter between the B+ pad and the battery + lead - make sure the power switch is off. If everything is OK there should be just a very tiny leakage current. If not, you probably have a bad module. I always check the charging current at this stage as well.
 
 If you are using a AAA holder, solder the +ve lead to the OUT+ pad and the -ve lead to OUT- pad. A 3x AAA battery holder should just fit between the Pico and the charger pads and can be stuck to the PCB with double sided foam tape. 
 
