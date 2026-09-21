@@ -6,12 +6,16 @@ Altho it was created for use with the iOS app, with some software modifications 
 
 The prototype worked very well so I have designed a PCB and enclosure which more or less duplicates the M8 V1 design - eight Kailh switches, approx 97mm x 84mm x18mm, white silkscreen. It has a small RGB led for indicating battery status, pads for a switch and pads for a lipo charger module as well.
 
+M8 V1 for reference
+
  ![Alt text](Images/M8_V1_V2.jpg "M8 Version 2 and 1")
  
+Second prototype using Cherry MX switches and 3D printed keycaps. First prototype was closer to the key layout in the M8 app.
  
  ![Alt text](Images/proto2.jpg  "Prototype") 
  
- 
+PCB version using Kailh switches, layout very similar to M8 V1 and V2 hardware.
+
  ![Alt text](Images/PCBtop.jpg "M8KB PCB front side")
  ![Alt text](Images/PCBbot.jpg "M8KB PCB back side") 
  
