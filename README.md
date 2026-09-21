@@ -9,7 +9,7 @@ The prototype worked very well so I have designed a PCB and enclosure which more
  ![Alt text](Images/M8_V1_V2.jpg "M8 Version 2 and 1")
  
  
- ![Alt text](Images/proto2.jpg"Prototype") 
+ ![Alt text](Images/proto2.jpg  "Prototype") 
  
  
  ![Alt text](Images/PCBtop.jpg "M8KB PCB front side")
