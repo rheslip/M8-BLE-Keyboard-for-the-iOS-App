@@ -1,5 +1,10 @@
 **BLE Wireless Keyboard for the M8 iOS App**
 
+
+Oct 3/2026 - more or less final version of the code which shows battery levels on the RGB LED
+
+Sept 17/2026 - added hardware design files for PCB and two enclosure variants (AAA battery and LiPo with charging jack) - tested and working OK
+
 Video demo of the final version https://www.youtube.com/watch?v=-Xh-XhrWJC8&t=2s
 
 When I saw that Dirtywave had released an M8 app on iOS one my first thoughts was to make an M8 like keyboard for it. I have an M8 headless that is almost identical to the real M8 and I wanted to leverage the muscle memory I had developed for that.
@@ -83,6 +88,3 @@ I couldn't find a suitable PCB mounted R/A slide switch so I went with PCB pads 
 
 The mounting holes in the enclosure are sized for 4-40 or 3mm screws - tap the holes. You could also use small wood or plastic cutting screws.
 
-Oct 3/2026 - more or less final version of the code which shows battery levels on the RGB LED
-
-Sept 17/2026 - added hardware design files for PCB and two enclosure variants (AAA battery and LiPo with charging jack) - tested and working OK
