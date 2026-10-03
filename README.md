@@ -17,7 +17,7 @@ M8 V1 and V2 images for reference
  
  ![Alt text](Images/finalpcb.jpg  "Component side of PCB with AAA batteries") 
  
- ![Alt text](Imageskeyswitches.jpg  "Kailh Switches") 
+ ![Alt text](Images/keyswitches.jpg  "Kailh Switches") 
  
 PCB images:
 
