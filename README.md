@@ -1,27 +1,32 @@
 **BLE Wireless Keyboard for the M8 iOS App**
 
+Video demo of the final version https://www.youtube.com/watch?v=-Xh-XhrWJC8&t=2s
+
 When I saw that Dirtywave had released an M8 app on iOS one my first thoughts was to make an M8 like keyboard for it. I have an M8 headless that is almost identical to the real M8 and I wanted to leverage the muscle memory I had developed for that.
 
 Altho it was created for use with the iOS app, with some software modifications it would work on a PC with the M8 Headless as well.
 
 The prototype worked very well so I have designed a PCB and enclosure which more or less duplicates the M8 V1 design - eight Kailh switches, approx 97mm x 84mm x18mm, white silkscreen. It has a small RGB led for indicating battery status, pads for a switch and pads for a lipo charger module as well.
 
+
+ ![Alt text](Images/final.jpg  "M8KB") 
+ 
 M8 V1 and V2 images for reference
 
  ![Alt text](Images/M8_V1V2.jpg  "M8 Version 2 and 1")
  
-Second prototype using Cherry MX switches and 3D printed keycaps. First prototype was closer to the key layout in the M8 app.
+ ![Alt text](Images/finalpcb.jpg  "Component side of PCB with AAA batteries") 
  
- ![Alt text](Images/proto2.jpg  "Prototype") 
+ ![Alt text](Imageskeyswitches.jpg  "Kailh Switches") 
  
-PCB version using Kailh switches, layout very similar to M8 V1 and V2 hardware.
+PCB images:
 
  ![Alt text](Images/PCBtop.jpg "M8KB PCB front side")
  ![Alt text](Images/PCBbot.jpg "M8KB PCB back side") 
  
  You may notice there is no ground fill on the board. This is intentional - a large GND plane near the antenna will mess with the BLE signal. I also wanted a clean front panel with no visible planes/traces/vias.
  
- 3D Renders of the enclosure. Note the cutouts for USB-C charging jack and switch. 
+ 3D Renders of the enclosure. Note the cutouts for USB-C charging jack and switch on the LiPo version. A version with no USB jack is provided for use with a AAA battery holder. 
 
 
  ![Alt text](Images/enclosure1.jpg "Front view") 
@@ -78,6 +83,6 @@ I couldn't find a suitable PCB mounted R/A slide switch so I went with PCB pads 
 
 The mounting holes in the enclosure are sized for 4-40 or 3mm screws - tap the holes. You could also use small wood or plastic cutting screws.
 
-Sept 15/2026 - initial version of the code - **still needs to be modified for the PCB version of M8KB**
+Oct 3/2026 - more or less final version of the code which shows battery levels on the RGB LED
 
-Sept 17/2026 - added hardware design files for PCB and enclosure **NOT TESTED YET - still awaiting PCBs from JLCPCB**
+Sept 17/2026 - added hardware design files for PCB and two enclosure variants (AAA battery and LiPo with charging jack) - tested and working OK

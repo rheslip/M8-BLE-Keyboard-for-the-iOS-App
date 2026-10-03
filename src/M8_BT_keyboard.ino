@@ -29,56 +29,95 @@ based on example code by Tom Igoe:
   https://www.arduino.cc/en/Tutorial/BuiltInExamples/KeyboardSerial
 */
 
+//#include <BLE.h>
 #include <KeyboardBLE.h>
+#include <Adafruit_NeoPixel.h>
+
+//BLEDevice central = BLE.central();
 
 #define KEYSCANTIME 5  // delay between key scans for debounce
 #define DEBOUNCECOUNT 4 //  number of keyscan delays for debounce
 
-#define NUMKEYS 9
+#define NUMKEYS 8
 
 // GPIOs that sense key closures to GND
 #define EDITKEY 10
-#define OPTKEY 11
-#define UPKEY 12
+#define OPTKEY 15
+#define UPKEY 14
 #define RIGHTKEY 13
-#define DOWNKEY 14
-#define LEFTKEY 15
-#define SHIFTKEYL 16
-#define SHIFTKEYR 17
-#define PLAYKEY 18
+#define DOWNKEY 12
+#define LEFTKEY 11
+#define SHIFTKEY 4
+#define PLAYKEY 5
 
-#define REDLED 9
-#define GREENLED 8
-#define BATTERYVOLTAGE 28
-#define BATOK 560  // approx 3.6v - bat voltage read thru external 2:1 divider
-#define BATLOW 500 // approx 3.2v
+int8_t keyGPIO [8]= {EDITKEY,OPTKEY,UPKEY,RIGHTKEY,DOWNKEY,LEFTKEY,SHIFTKEY,PLAYKEY}; // key index 0-7 to key GPIO mapping
+
+#define LEDPIN 3
+#define NUMPIXELS 1 // 
+#define LEDFLASH 100
+#define LED_RED 0x030000  // only using 2 bits to keep LEDs from getting too bright and to save power
+#define LED_GREEN 0x000300
+#define LED_BLUE 0x000003
+#define LED_OFF 0
+// battery level colors from red to green
+#define BATTCOLORS 4
+int32_t battcolors[]={LED_RED,0x020000+0x000100,0x010000+0x000200,LED_GREEN};
+
+Adafruit_NeoPixel LED(NUMPIXELS, LEDPIN, NEO_GRB + NEO_KHZ800);
+
+#define BATTERYVOLTAGEINTERNAL 29  // internal connection on Pico W 2
+#define BATTERYVOLTAGE 26  // external resistor divider connection
+// bat voltage ranges for LiPo
+//#define BATOK 560  // approx 3.6v - bat voltage read thru external 2:1 divider
+//#define BATLOW 500 // approx 3.2v
+// bat voltage ranges for 3x AAA batteries
+#define BATOK 580  // approx 3.75v - bat voltage read thru external 2:1 divider
+#define BATLOW 450 // approx 3 v
+#define BATTSAMPLE 1000 // timer period for battery sampling. don't want to update the RGB LED too often because it could cause issues with the BLE signal
+
+void BLE_flash(void) {
+  LED.setPixelColor(0,LED_BLUE); 
+  LED.show();
+  delay(LEDFLASH);
+  LED.setPixelColor(0,LED_OFF); 
+  LED.show();
+  delay(LEDFLASH);
+}
+
+void showbatterylevel(void) { 
+  int16_t batvoltage=analogRead(BATTERYVOLTAGE);
+//  Serial.printf("bat = %d\n",batvoltage);
+  batvoltage=constrain(batvoltage,BATLOW,BATOK);
+  LED.setPixelColor(0,battcolors[map(batvoltage,BATLOW,BATOK,0,BATTCOLORS-1)]); 
+  LED.show();
+}
 
 void setup() {
   Serial.begin(115200);
-  for (uint8_t i=0;i<NUMKEYS;++i) pinMode(EDITKEY+i, INPUT_PULLUP); 
+  for (uint8_t i=0;i<NUMKEYS;++i) pinMode(keyGPIO[i],INPUT_PULLUP); 
 
-  pinMode(REDLED,OUTPUT);
-  pinMode(GREENLED,OUTPUT);  
-
+  LED.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  showbatterylevel();
   KeyboardBLE.begin();
+//  while (!central.connected()) BLE_flash(); // so far I can't figure out how to detect BLE connection status
 }
 
 void loop() {
   static uint16_t keymap=0;
   static uint16_t keycnt=0;
-  static uint32_t keytimer;
+  static uint32_t batt_timer;
   static int16_t scancnt;
   bool keystate;
 
 
   for (uint8_t i=0;i<NUMKEYS;++i)  {
-    keystate=!digitalRead(EDITKEY+i);
-    if ((bool)(keymap & (1<<i)) != keystate) {
-      if (keycnt > DEBOUNCECOUNT ) {
-        if (keystate) keymap|=1 <<i;
+    keystate=!digitalRead(keyGPIO[i]);  // read key 
+    if ((bool)(keymap & (1<<i)) != keystate) { // if its different than last scan
+      if (keycnt > DEBOUNCECOUNT ) {  // debounce
+        if (keystate) keymap|=1 <<i;  // debounced, update state
         else keymap &= 0xfe << i;
-  //      Serial.printf("key %d map %x state %d\n",i,keymap,keystate);
-        switch (i) {
+
+        switch (i) {  // process key up and down
           case 0:  // edit key
             if (keystate) KeyboardBLE.press('X');
             else KeyboardBLE.release('X');
@@ -88,27 +127,26 @@ void loop() {
             else KeyboardBLE.release('Z');
             break;
           case 2: // UP key
-            if (keystate) KeyboardBLE.press('W');
-            else KeyboardBLE.release('W');
+            if (keystate) KeyboardBLE.press(KEY_UP_ARROW);
+            else KeyboardBLE.release(KEY_UP_ARROW);
             break;
           case 3: // RIGHT key
-            if (keystate) KeyboardBLE.press('D');
-            else KeyboardBLE.release('D');
+            if (keystate) KeyboardBLE.press(KEY_RIGHT_ARROW);
+            else KeyboardBLE.release(KEY_RIGHT_ARROW);
             break;
           case 4: // DOWN key
-            if (keystate) KeyboardBLE.press('S');
-            else KeyboardBLE.release('S');
+            if (keystate) KeyboardBLE.press(KEY_DOWN_ARROW);
+            else KeyboardBLE.release(KEY_DOWN_ARROW);
             break;
           case 5: // LEFT key
-            if (keystate) KeyboardBLE.press('A');
-            else KeyboardBLE.release('A');
+            if (keystate) KeyboardBLE.press(KEY_LEFT_ARROW);
+            else KeyboardBLE.release(KEY_LEFT_ARROW);
             break;
-          case 6: // left and right SHIFT key
-          case 7:
-            if (keystate) KeyboardBLE.press('Q');
-            else KeyboardBLE.release('Q');
+          case 6: // SHIFT key
+            if (keystate) KeyboardBLE.press(KEY_RIGHT_SHIFT);  
+            else KeyboardBLE.release(KEY_RIGHT_SHIFT);
             break;
-          case 8:  // play key
+          case 7:  // play key
             if (keystate) KeyboardBLE.press(' ');
             else KeyboardBLE.release(' ');
             break;       
@@ -122,20 +160,8 @@ void loop() {
     }   
   }
 
-  // monitor battery voltage and show on R/G led
-  int16_t batvoltage=analogRead(BATTERYVOLTAGE);
-  if (batvoltage > BATOK) {
-    digitalWrite (REDLED,0);
-    digitalWrite (GREENLED,1);
+  if ((millis()-batt_timer) > BATTSAMPLE) {
+    batt_timer=millis();
+    showbatterylevel();
   }
-  else if (batvoltage < BATLOW) {
-    digitalWrite (REDLED,1);
-    digitalWrite (GREENLED,0);
-  } 
-  else {
-    digitalWrite (REDLED,1);  // orange for kinda low
-    digitalWrite (GREENLED,1);
-  } 
- // Serial.printf("bat %d\n",batvoltage);
- // delay(100);
 }
